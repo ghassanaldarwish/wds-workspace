@@ -22,10 +22,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying......'
-                script {
-                  // Run Ansible playbook
-                   // sh "ansible-playbook -i inventory playbook.yml"
-                }
+                // script {
+                //   // Run Ansible playbook
+                //    // sh "ansible-playbook -i inventory playbook.yml"
+                // }
             }
         }
     }
