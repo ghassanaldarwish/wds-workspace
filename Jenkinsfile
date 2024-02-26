@@ -21,11 +21,11 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying......'
-                // script {
-                //   // Run Ansible playbook
-                //    // sh "ansible-playbook -i inventory playbook.yml"
-                // }
+                echo 'Deploying...'
+                // Execute the ansible playbook
+                sh """
+                ansible-playbook -i /usr/inventory --key-file /usr/.ssh/id_ed25519 ansible.yaml
+                """
             }
         }
     }
