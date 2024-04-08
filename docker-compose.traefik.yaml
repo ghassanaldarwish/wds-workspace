@@ -1,21 +1,26 @@
 version: "3.8"
 # commands url http://host.docker.internal:6777
 services:
-  wds-workspace-traefik:
-    restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.wds-workspace-traefik.rule=Host(`workspace.wdsui.com`)"
-      - "traefik.http.routers.wds-workspace-traefik.entrypoints=websecure"
-      - "traefik.http.routers.wds-workspace-traefik.tls.certresolver=letsencrypt"
-      - traefik.http.routers.wds-workspace-traefik.tls=true
-      - "traefik.http.services.wds-workspace-traefik.loadbalancer.server.port=80"
+  wds-workspace-traefik-app:
+    image: "ghassanaldarwish/wds-workspace"
+    restart: on-failure
     networks:
       - app-workspace-network
       - frontend
+    environment:
+      - IS_DOCKER=true
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_PORT=0
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wds-workspace-traefik-app.rule=Host(`workspace.wdsui.com`)"
+      - "traefik.http.routers.wds-workspace-traefik-app.entrypoints=websecure"
+      - "traefik.http.routers.wds-workspace-traefik-app.tls.certresolver=letsencrypt"
+      - traefik.http.routers.wds-workspace-traefik-app.tls=true
+      - "traefik.http.services.wds-workspace-traefik-app.loadbalancer.server.port=80"
+    env_file:
+      - ../environment/wds-workspace/.env.local
 
 networks:
   app-workspace-network:
