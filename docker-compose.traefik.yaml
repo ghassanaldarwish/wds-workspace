@@ -1,0 +1,25 @@
+version: "3.8"
+# commands url http://host.docker.internal:6777
+services:
+  wds-workspace-trawfik:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wds-workspace-trawfik.rule=Host(`workspace.wdsui.com`)"
+      - "traefik.http.routers.wds-workspace-trawfik.entrypoints=websecure"
+      - "traefik.http.routers.wds-workspace-trawfik.tls.certresolver=letsencrypt"
+      - traefik.http.routers.wds-workspace-trawfik.tls=true
+      - "traefik.http.services.wds-workspace-trawfik.loadbalancer.server.port=80"
+    networks:
+      - app-workspace-network
+      - frontend
+
+networks:
+  app-workspace-network:
+    name: app-workspace-network
+
+  frontend:
+    name: frontend
