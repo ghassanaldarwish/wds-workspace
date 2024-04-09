@@ -3,7 +3,7 @@ version: "3.8"
 services:
   wds-workspace-traefik-app:
     image: "ghassanaldarwish/wds-workspace"
-    restart: on-failure
+    restart: always
     networks:
       - app-workspace-network
       - frontend
