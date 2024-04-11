@@ -1,9 +1,9 @@
 version: "3.8"
 # commands url http://host.docker.internal:6777
 services:
-  wds-workspace-traefik-app:
+  wds-workspace:
     image: "ghassanaldarwish/wds-workspace"
-    restart: always
+    restart: unless-stopped
     networks:
       - app-workspace-network
       - frontend
@@ -14,11 +14,11 @@ services:
       - NODE_ENV=production
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.wds-workspace-traefik-app.rule=Host(`workspace.webdrei.com`)"
-      - "traefik.http.routers.wds-workspace-traefik-app.entrypoints=websecure"
-      - "traefik.http.routers.wds-workspace-traefik-app.tls.certresolver=letsencrypt"
-      - traefik.http.routers.wds-workspace-traefik-app.tls=true
-      - "traefik.http.services.wds-workspace-traefik-app.loadbalancer.server.port=3000"
+      - "traefik.http.routers.wds-workspace.rule=Host(`workspace.webdrei.com`)"
+      - "traefik.http.routers.wds-workspace.entrypoints=websecure"
+      - "traefik.http.routers.wds-workspace.tls.certresolver=letsencrypt"
+      - traefik.http.routers.wds-workspace.tls=true
+      - "traefik.http.services.wds-workspace.loadbalancer.server.port=3000"
     # env_file:
     #   - ../environment/wds-workspace/.env.local
 
